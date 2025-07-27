@@ -1,0 +1,47 @@
+{
+  "name": "playwright-demoqa",
+  "version": "1.0.0",
+  "description": "Playwright test automation project for demoqa.com demonstrating TypeScript and Page Object Model",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:install": "playwright install",
+    "test:codegen": "playwright codegen https://demoqa.com",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:mobile": "playwright test --project=\"Mobile Chrome\"",
+    "test:parallel": "playwright test --workers=4",
+    "test:retry": "playwright test --retries=2",
+    "test:update-snapshots": "playwright test --update-snapshots",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf test-results playwright-report screenshots dist",
+    "build": "tsc",
+    "preview": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "test-automation",
+    "e2e-testing",
+    "page-object-model",
+    "demoqa"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "playwright": "^1.54.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
