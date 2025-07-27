@@ -55,7 +55,6 @@ export class DroppablePage extends BasePage {
 
   async navigateToDroppable(): Promise<void> {
     await this.navigateTo('/droppable');
-    await this.waitForPageLoad();
   }
 
   async navigateToAcceptTab(): Promise<void> {

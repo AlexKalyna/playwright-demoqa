@@ -1,42 +1,40 @@
 # Playwright DemoQA Test Automation Project
 
-A comprehensive test automation project for [demoqa.com](https://demoqa.com) built with TypeScript and Playwright, demonstrating modern test automation practices including Page Object Model, data-driven testing, and cross-browser testing.
+A focused test automation project for [demoqa.com](https://demoqa.com) built with TypeScript and Playwright, demonstrating modern test automation practices with emphasis on drag and drop functionality, mouse manipulations, and clean architecture patterns.
 
 ## 🚀 Features
 
 - **TypeScript Support**: Full TypeScript implementation with strict type checking
-- **Page Object Model**: Well-structured page objects for maintainable tests
-- **Cross-Browser Testing**: Support for Chrome, Firefox, Safari, and mobile browsers
-- **Data-Driven Testing**: Reusable test data and dynamic data generation
-- **Comprehensive Test Coverage**: Home page, forms, and end-to-end workflows
-- **Responsive Testing**: Mobile and tablet viewport testing
-- **Accessibility Testing**: Keyboard navigation and accessibility checks
-- **Performance Testing**: Load time verification and performance monitoring
-- **Visual Testing**: Screenshot capture for visual regression testing
+- **Clean Architecture**: Page Object Model with Component Pattern for maintainable tests
+- **Drag and Drop Testing**: Comprehensive drag and drop scenarios with visual feedback
+- **Mouse Manipulations**: Advanced mouse interaction testing (hover, click, wheel, etc.)
+- **Single Responsibility Principle**: Eliminated God Object pattern with focused components
+- **Self-Descriptive Code**: No comments - code speaks for itself
+- **Performance Testing**: Drag and drop performance assertions
+- **Cross-Viewport Testing**: Mobile, tablet, and desktop viewport validation
+- **Robust Test Framework**: 13 passing tests with clean architecture
 
 ## 📁 Project Structure
 
 ```
 playwright-demoqa/
-├── src/
-│   ├── pages/           # Page Object Models
-│   │   ├── BasePage.ts  # Base page with common functionality
-│   │   ├── HomePage.ts  # Home page interactions
-│   │   └── FormsPage.ts # Forms page interactions
-│   ├── data/            # Test data
-│   │   └── testData.ts  # Form data and test constants
-│   └── utils/           # Utility functions
-│       └── testHelpers.ts # Helper functions for testing
-├── tests/               # Test files
-│   ├── home.spec.ts     # Home page tests
-│   ├── forms.spec.ts    # Forms functionality tests
-│   └── e2e.spec.ts      # End-to-end workflow tests
-├── screenshots/         # Test screenshots (auto-generated)
-├── test-results/        # Test results and reports (auto-generated)
-├── playwright-report/   # HTML test reports (auto-generated)
-├── playwright.config.ts # Playwright configuration
-├── tsconfig.json        # TypeScript configuration
-└── package.json         # Project dependencies and scripts
+├── components/                    # Reusable UI Components
+│   ├── DragAndDropComponent.ts   # Drag and drop operations
+│   ├── MouseManipulationComponent.ts # Mouse interactions
+│   └── TabNavigationComponent.ts # Tab navigation logic
+├── pages/                        # Page Object Models
+│   ├── BasePage.ts              # Base page with common functionality
+│   └── DroppablePage.ts         # Droppable page interactions
+├── data/                         # Test data and constants
+│   └── droppableTestData.ts     # Drag and drop specific data
+├── tests/                        # Test files
+│   ├── drag-and-drop.spec.ts    # Drag and drop functionality tests
+│   └── mouse-manipulations.spec.ts # Mouse manipulation tests
+├── test-results/                 # Test results and reports (auto-generated)
+├── playwright-report/            # HTML test reports (auto-generated)
+├── playwright.config.ts          # Playwright configuration
+├── tsconfig.json                 # TypeScript configuration
+└── package.json                  # Project dependencies and scripts
 ```
 
 ## 🛠️ Setup Instructions
@@ -44,12 +42,13 @@ playwright-demoqa/
 ### Prerequisites
 
 - Node.js (version 16 or higher)
-- npm or yarn package manager
+- npm package manager
 
 ### Installation
 
-1. **Clone or navigate to the project directory**
+1. **Clone the repository**
    ```bash
+   git clone https://github.com/AlexKalyna/playwright-demoqa.git
    cd playwright-demoqa
    ```
 
@@ -86,27 +85,17 @@ npm run test:debug
 npm run test:ui
 ```
 
-### Browser-Specific Testing
+### Test Categories
 
 ```bash
-# Run tests on specific browsers
-npm run test:chromium
-npm run test:firefox
-npm run test:webkit
-npm run test:mobile
-```
+# Run drag and drop tests only
+npx playwright test --grep "@drag-and-drop"
 
-### Advanced Test Options
+# Run mouse manipulation tests only
+npx playwright test --grep "@mouse-manipulations"
 
-```bash
-# Run tests in parallel
-npm run test:parallel
-
-# Run tests with retries
-npm run test:retry
-
-# Update visual snapshots
-npm run test:update-snapshots
+# Run specific test
+npx playwright test --grep "should perform simple drag and drop operation"
 ```
 
 ### Test Reports
@@ -119,102 +108,130 @@ npm run test:report
 npm run preview
 ```
 
-## 📋 Test Categories
+## 📋 Test Coverage
 
-### 1. Home Page Tests (`tests/home.spec.ts`)
-- Page loading and navigation
-- Card visibility and functionality
-- Responsive design verification
-- Accessibility testing
-- Cross-browser compatibility
+### 1. Drag and Drop Tests (`tests/drag-and-drop.spec.ts`)
+- **Simple Drag and Drop**: Basic drag and drop operation with verification
+- **Accept Tab Functionality**: Testing acceptable and non-acceptable elements
+- **Prevent Propagation**: Testing nested droppable areas
+- **Visual Feedback**: Background color and cursor style verification
+- **Viewport Testing**: Mobile, tablet, and desktop viewport validation
+- **Performance Testing**: Drag and drop performance assertions
 
-### 2. Forms Tests (`tests/forms.spec.ts`)
-- Form filling and submission
-- Data validation
-- Modal interactions
-- File upload handling
-- Special character handling
+### 2. Mouse Manipulation Tests (`tests/mouse-manipulations.spec.ts`)
+- **Hover Effects**: Cursor style changes on hover
+- **Double-Click**: Double-click functionality testing
+- **Mouse Down/Up**: Mouse press and release without drag
+- **Keyboard Modifiers**: Shift-click and other modifier combinations
+- **Performance Measurement**: Mouse interaction timing
+- **Multiple Clicks**: Sequential click operations
+- **Prevent Propagation**: Mouse interactions with nested elements
 
-### 3. End-to-End Tests (`tests/e2e.spec.ts`)
-- Complete user workflows
-- Cross-browser navigation
-- Performance testing
-- Error handling
-- Data persistence
+## 🏗️ Architecture Patterns
 
-## 🏗️ Page Object Model
+### Component Pattern
+The project demonstrates clean separation of concerns through focused components:
 
-### BasePage
-Provides common functionality for all page objects:
+#### **DragAndDropComponent**
+Handles all drag and drop operations:
+- `dragTo()` - Standard drag and drop
+- `dragWithMouse()` - Manual mouse-based drag
+- `verifyDropSuccess()` - Drop verification
+- `verifyInitialState()` - Initial state validation
+- `measurePerformance()` - Performance measurement
+
+#### **MouseManipulationComponent**
+Manages mouse interactions:
+- `hoverOnElement()` - Element hovering
+- `rightClickOnElement()` - Right-click operations
+- `doubleClickOnElement()` - Double-click functionality
+- `scrollWithMouseWheel()` - Mouse wheel scrolling
+- `clickWithKeyboardModifier()` - Keyboard + mouse combinations
+
+#### **TabNavigationComponent**
+Handles tab navigation:
+- `navigateToAcceptTab()` - Accept tab navigation
+- `navigateToPreventPropagationTab()` - Prevent propagation tab
+- `navigateToRevertDraggableTab()` - Revert draggable tab
+
+### Page Object Model
+#### **DroppablePage**
+Main page object for droppable functionality:
+- Element locators with getters
 - Navigation methods
-- Element interaction helpers
+- Test orchestration methods
+- Component coordination
+
+#### **BasePage**
+Common functionality for all pages:
+- Navigation methods
+- Viewport management
 - Screenshot capabilities
-- Retry mechanisms
-
-### HomePage
-Handles home page interactions:
-- Card navigation
-- Element verification
-- Responsive testing
-
-### FormsPage
-Manages form functionality:
-- Form filling
-- Data submission
-- Modal handling
-- Validation testing
+- Page load waiting
 
 ## 📊 Test Data Management
 
-The project includes comprehensive test data management:
-
-- **Static Test Data**: Predefined form data sets
-- **Dynamic Data Generation**: Random data generation for testing
-- **Data Validation**: Email, phone number, and format validation
-- **Reusable Data**: Shared test constants and URLs
+### **droppableTestData.ts**
+Centralized constants for droppable functionality:
+- Element selectors
+- Viewport sizes
+- Tab names
+- Expected texts
+- Performance thresholds
 
 ## 🔧 Configuration
 
 ### Playwright Configuration (`playwright.config.ts`)
-- Multi-browser support (Chrome, Firefox, Safari, Mobile)
-- Parallel test execution
-- Screenshot and video capture on failure
-- HTML, JSON, and JUnit reporting
-- Custom timeouts and retries
+- **Browser**: Chromium only (focused testing)
+- **Parallel Execution**: Enabled for faster test runs
+- **Reporting**: HTML, JSON, and JUnit reports
+- **Artifacts**: Screenshots and videos on failure
+- **Base URL**: https://demoqa.com
 
 ### TypeScript Configuration (`tsconfig.json`)
-- Strict type checking
-- Path mapping for clean imports
-- Source map generation
-- Module resolution settings
+- **Target**: ES2022
+- **Strict Mode**: Enabled
+- **Path Mapping**: Clean imports
+- **Module Resolution**: CommonJS
 
-## 📈 Best Practices Demonstrated
+## 🎯 Best Practices Demonstrated
 
-1. **Page Object Model**: Separation of test logic from page interactions
-2. **Data-Driven Testing**: Reusable test data and dynamic generation
-3. **Cross-Browser Testing**: Consistent behavior across browsers
-4. **Responsive Testing**: Mobile and tablet compatibility
-5. **Accessibility Testing**: Keyboard navigation and screen reader support
-6. **Error Handling**: Robust error handling and recovery
-7. **Performance Testing**: Load time verification
-8. **Visual Testing**: Screenshot capture for regression testing
+1. **Single Responsibility Principle**: Each class has one clear purpose
+2. **Component Pattern**: Reusable UI components for specific functionality
+3. **Page Object Model**: Separation of test logic from page interactions
+4. **Self-Descriptive Code**: No comments - method names and structure speak for themselves
+5. **Data-Driven Testing**: Centralized test data management
+6. **Performance Testing**: Drag and drop performance validation
+7. **Cross-Viewport Testing**: Responsive design validation
+8. **Clean Architecture**: Eliminated God Object pattern
+9. **YAGNI Principle**: Only essential code, no unnecessary features
 
-## 🚀 CI/CD Integration
+## 🚀 Key Achievements
 
-The project is ready for CI/CD integration with:
-- Cross-browser testing support
-- Parallel execution capabilities
-- Comprehensive reporting
-- Screenshot and video artifacts
-- Retry mechanisms for flaky tests
+- **13 Passing Tests**: All tests execute successfully
+- **Clean Architecture**: No God Objects, focused responsibilities
+- **Maintainable Code**: Easy to extend and modify
+- **Robust Testing**: Comprehensive drag and drop and mouse interaction coverage
+- **Performance Focused**: Performance assertions for critical operations
+- **Minimal Codebase**: Only essential files and functionality
 
-## 📝 Contributing
+## 📝 Scripts Available
 
-1. Follow the existing code structure and patterns
-2. Add appropriate TypeScript types
-3. Include comprehensive test coverage
-4. Update documentation as needed
-5. Run linting and type checking before committing
+```bash
+# Test Execution
+npm test                    # Run all tests
+npm run test:headed        # Run with visible browser
+npm run test:debug         # Run in debug mode
+npm run test:ui            # Run with Playwright UI
+
+# Development
+npm run type-check         # TypeScript type checking
+npm run clean              # Clean generated files
+
+# Reports
+npm run test:report        # Show HTML report
+npm run preview            # Preview latest report
+```
 
 ## 🐛 Troubleshooting
 
@@ -231,13 +248,9 @@ The project is ready for CI/CD integration with:
    ```
 
 3. **Test Failures**
-   - Check network connectivity
-   - Verify demoqa.com is accessible
+   - Check network connectivity to demoqa.com
+   - Verify the website is accessible
    - Review test data validity
-
-4. **Performance Issues**
-   - Reduce parallel workers: `npm run test --workers=2`
-   - Increase timeouts in configuration
 
 ## 📚 Additional Resources
 
@@ -248,7 +261,3 @@ The project is ready for CI/CD integration with:
 ## 📄 License
 
 This project is licensed under the ISC License.
-
----
-
-**Note**: This project is designed for educational and demonstration purposes. The tests are specifically tailored for the demoqa.com website and may need adjustments for other applications. 
