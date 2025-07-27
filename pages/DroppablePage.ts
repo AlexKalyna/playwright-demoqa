@@ -131,7 +131,7 @@ export class DroppablePage extends BasePage {
   async testMouseInteractions(): Promise<void> {
     await this.verifyDroppableInitialState();
     await this.verifyCursorStyle('move');
-    await this.performMouseDragAndDrop();
+    await this.performDragAndDrop();
     await this.verifyDropSuccess();
   }
 
@@ -191,6 +191,7 @@ export class DroppablePage extends BasePage {
 
   async testWithViewportSize(size: { width: number; height: number }): Promise<void> {
     await this.setViewportSize(size);
+    await this.navigateToDroppable();
     await this.performDragAndDrop();
     await this.verifyDropSuccess();
   }

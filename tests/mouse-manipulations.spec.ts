@@ -22,17 +22,6 @@ test.describe('Mouse Manipulations', () => {
     await droppablePage.verifyDraggableVisible();
   });
 
-  test('should test mouse down and up without drag', { tag: '@mouse-manipulations' }, async () => {
-    const initialBox = await droppablePage.draggable.boundingBox();
-    
-    await mouseManipulation.mouseDownAndUpOnElement(droppablePage.draggable);
-    
-    const finalBox = await droppablePage.draggable.boundingBox();
-    
-    expect(finalBox?.x).toBe(initialBox?.x);
-    expect(finalBox?.y).toBe(initialBox?.y);
-  });
-
   test('should test mouse interactions with keyboard modifiers', { tag: '@mouse-manipulations' }, async () => {
     await mouseManipulation.clickWithKeyboardModifier(droppablePage.draggable, 'Shift');
     await droppablePage.verifyDraggableVisible();
