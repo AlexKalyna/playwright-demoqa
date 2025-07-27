@@ -1,7 +1,20 @@
 # Playwright DemoQA Test Automation Project
 
-A focused test automation project for [demoqa.com](https://demoqa.com) built with TypeScript and Playwright, demonstrating modern test automation practices with emphasis on drag and drop functionality, mouse manipulations, keyboard interactions, and clean architecture patterns.
+A focused test automation project for [demoqa.com](https://demoqa.com) built with TypeScript and Playwright, demonstrating modern test automation practices with emphasis on drag and drop functionality, mouse manipulations, keyboard interactions, file upload/download, and clean architecture patterns.
 
+## 🚀 Features
+
+- **TypeScript Support**: Full TypeScript implementation with strict type checking
+- **Clean Architecture**: Page Object Model with Component Pattern for maintainable tests
+- **Drag and Drop Testing**: Comprehensive drag and drop scenarios with visual feedback
+- **Mouse Manipulations**: Advanced mouse interaction testing (hover, click, wheel, etc.)
+- **Keyboard Interactions**: Complete keyboard simulation testing (text input, navigation, shortcuts)
+- **File Upload/Download**: Comprehensive file upload and download testing with validation
+- **Single Responsibility Principle**: Eliminated God Object pattern with focused components
+- **Self-Descriptive Code**: No comments - code speaks for itself
+- **Performance Testing**: Drag and drop, keyboard, and file upload performance assertions
+- **Cross-Viewport Testing**: Mobile, tablet, and desktop viewport validation
+- **Robust Test Framework**: 51 passing tests with clean architecture
 
 ## 📁 Project Structure
 
@@ -11,18 +24,23 @@ playwright-demoqa/
 │   ├── DragAndDropComponent.ts   # Drag and drop operations
 │   ├── MouseManipulationComponent.ts # Mouse interactions
 │   ├── KeyboardInteractionComponent.ts # Keyboard interactions
+│   ├── FileUploadComponent.ts    # File upload operations
 │   └── TabNavigationComponent.ts # Tab navigation logic
 ├── pages/                        # Page Object Models
 │   ├── BasePage.ts              # Base page with common functionality
 │   ├── DroppablePage.ts         # Droppable page interactions
-│   └── TextBoxPage.ts           # Text box page interactions
+│   ├── TextBoxPage.ts           # Text box page interactions
+│   └── UploadDownloadPage.ts    # Upload/download page interactions
 ├── data/                         # Test data and constants
 │   ├── droppableTestData.ts     # Drag and drop specific data
-│   └── keyboardTestData.ts      # Keyboard interaction data
+│   ├── keyboardTestData.ts      # Keyboard interaction data
+│   └── fileUploadTestData.ts    # File upload/download data
 ├── tests/                        # Test files
 │   ├── drag-and-drop.spec.ts    # Drag and drop functionality tests
 │   ├── mouse-manipulations.spec.ts # Mouse manipulation tests
-│   └── keyboard-interactions.spec.ts # Keyboard interaction tests
+│   ├── keyboard-interactions.spec.ts # Keyboard interaction tests
+│   └── file-upload.spec.ts      # File upload/download tests
+├── test-files/                   # Test files for upload testing
 ├── test-results/                 # Test results and reports (auto-generated)
 ├── playwright-report/            # HTML test reports (auto-generated)
 ├── playwright.config.ts          # Playwright configuration
@@ -90,6 +108,9 @@ npx playwright test --grep "@mouse-manipulations"
 # Run keyboard interaction tests only
 npx playwright test --grep "@keyboard-interactions"
 
+# Run file upload tests only
+npx playwright test --grep "@file-upload"
+
 # Run specific test
 npx playwright test --grep "should perform simple drag and drop operation"
 ```
@@ -133,6 +154,17 @@ npm run preview
 - **Focus Management**: Proper focus handling between elements
 - **Rapid Input**: Multiple rapid key presses testing
 
+### 4. File Upload/Download Tests (`tests/file-upload.spec.ts`)
+- **Single File Upload**: Upload individual files with validation
+- **File Validation**: File name, size, and type verification
+- **Performance Testing**: Upload performance measurement
+- **Drag and Drop Upload**: File upload via drag and drop
+- **File Input Management**: Clear and verify file input states
+- **Download Functionality**: File download testing
+- **Sequential Uploads**: Multiple file uploads in sequence
+- **Error Handling**: File upload error scenarios
+- **Comprehensive Workflow**: End-to-end upload workflow testing
+
 ## 🏗️ Architecture Patterns
 
 ### Component Pattern
@@ -164,6 +196,17 @@ Handles keyboard interactions:
 - `selectAllText()` - Text selection shortcuts
 - `measureKeyboardInteractionPerformance()` - Performance measurement
 
+#### **FileUploadComponent**
+Handles file upload operations:
+- `uploadFile()` - Single file upload
+- `dragAndDropFile()` - Drag and drop file upload
+- `verifyFileUploaded()` - File upload verification
+- `verifyFileSize()` - File size validation
+- `verifyFileType()` - File type validation
+- `clearFileInput()` - Clear file input
+- `downloadFile()` - File download functionality
+- `measureUploadPerformance()` - Upload performance measurement
+
 #### **TabNavigationComponent**
 Handles tab navigation:
 - `navigateToAcceptTab()` - Accept tab navigation
@@ -184,6 +227,13 @@ Page object for keyboard interaction testing:
 - Keyboard input methods
 - Form submission methods
 - Output verification methods
+
+#### **UploadDownloadPage**
+Page object for file upload/download testing:
+- File input locators
+- Upload/download methods
+- File validation methods
+- Performance measurement methods
 
 #### **BasePage**
 Common functionality for all pages:
@@ -210,6 +260,14 @@ Centralized constants for keyboard functionality:
 - Performance thresholds
 - Expected behaviors
 
+### **fileUploadTestData.ts**
+Centralized constants for file upload functionality:
+- Element selectors
+- File types and sizes
+- Test file specifications
+- Performance thresholds
+- Expected messages and behaviors
+
 ## 🔧 Configuration
 
 ### Playwright Configuration (`playwright.config.ts`)
@@ -225,7 +283,28 @@ Centralized constants for keyboard functionality:
 - **Path Mapping**: Clean imports
 - **Module Resolution**: CommonJS
 
+## 🎯 Best Practices Demonstrated
 
+1. **Single Responsibility Principle**: Each class has one clear purpose
+2. **Component Pattern**: Reusable UI components for specific functionality
+3. **Page Object Model**: Separation of test logic from page interactions
+4. **Self-Descriptive Code**: No comments - method names and structure speak for themselves
+5. **Data-Driven Testing**: Centralized test data management
+6. **Performance Testing**: Drag and drop, keyboard, and file upload performance validation
+7. **Cross-Viewport Testing**: Responsive design validation
+8. **Clean Architecture**: Eliminated God Object pattern
+9. **YAGNI Principle**: Only essential code, no unnecessary features
+10. **Modern Playwright APIs**: Using fill() instead of deprecated type()
+
+## 🚀 Key Achievements
+
+- **51 Passing Tests**: All tests execute successfully
+- **Clean Architecture**: No God Objects, focused responsibilities
+- **Maintainable Code**: Easy to extend and modify
+- **Robust Testing**: Comprehensive drag and drop, mouse, keyboard, and file upload coverage
+- **Performance Focused**: Performance assertions for all operations
+- **Minimal Codebase**: Only essential files and functionality
+- **Modern APIs**: Using latest Playwright methods and best practices
 
 ## 📝 Scripts Available
 
@@ -273,3 +352,7 @@ npm run preview            # Preview latest report
 ## 📄 License
 
 This project is licensed under the ISC License.
+
+---
+
+**Note**: This project demonstrates professional test automation practices with a focus on drag and drop functionality, mouse manipulations, keyboard interactions, and file upload/download operations. The architecture follows clean code principles and YAGNI (You Aren't Gonna Need It) principle for maintainability and extensibility.

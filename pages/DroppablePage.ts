@@ -192,6 +192,7 @@ export class DroppablePage extends BasePage {
   async testWithViewportSize(size: { width: number; height: number }): Promise<void> {
     await this.setViewportSize(size);
     await this.navigateToDroppable();
+    await this.page.waitForTimeout(1000);
     await this.performDragAndDrop();
     await this.verifyDropSuccess();
   }
