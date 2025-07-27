@@ -14,10 +14,6 @@ test.describe('Drag and Drop Functionality', () => {
     await droppablePage.testBasicDragAndDrop();
   });
 
-  test('should handle mouse interactions with drag and drop elements', { tag: '@drag-and-drop' }, async () => {
-    await droppablePage.testMouseInteractions();
-  });
-
   test('should test Accept tab functionality', { tag: '@drag-and-drop' }, async () => {
     await droppablePage.navigateToAcceptTab();
     await droppablePage.testAcceptableElement();

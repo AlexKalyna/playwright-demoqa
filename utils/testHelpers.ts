@@ -1,8 +1,5 @@
 import { Page } from '@playwright/test';
 
-/**
- * Generate random string of specified length
- */
 export function generateRandomString(length: number): string {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
@@ -12,25 +9,16 @@ export function generateRandomString(length: number): string {
   return result;
 }
 
-/**
- * Generate random email
- */
 export function generateRandomEmail(): string {
   const username = generateRandomString(8);
   const domain = generateRandomString(6);
   return `${username}@${domain}.com`;
 }
 
-/**
- * Generate random phone number
- */
 export function generateRandomPhoneNumber(): string {
   return Math.floor(Math.random() * 9000000000) + 1000000000 + '';
 }
 
-/**
- * Generate random date between two dates
- */
 export function generateRandomDate(start: Date, end: Date): string {
   const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   return date.toLocaleDateString('en-GB', {
@@ -40,40 +28,25 @@ export function generateRandomDate(start: Date, end: Date): string {
   });
 }
 
-/**
- * Wait for network idle with custom timeout
- */
 export async function waitForNetworkIdle(page: Page, timeout: number = 5000): Promise<void> {
   await page.waitForLoadState('networkidle', { timeout });
 }
 
-/**
- * Take screenshot with timestamp
- */
 export async function takeScreenshotWithTimestamp(page: Page, name: string): Promise<void> {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   await page.screenshot({ path: `screenshots/${name}-${timestamp}.png` });
 }
 
-/**
- * Validate email format
- */
 export function isValidEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-/**
- * Validate phone number format (10 digits)
- */
 export function isValidPhoneNumber(phone: string): boolean {
   const phoneRegex = /^\d{10}$/;
   return phoneRegex.test(phone);
 }
 
-/**
- * Format date for form input
- */
 export function formatDateForInput(date: Date): string {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -81,9 +54,6 @@ export function formatDateForInput(date: Date): string {
   return `${year}-${month}-${day}`;
 }
 
-/**
- * Retry function with exponential backoff
- */
 export async function retryWithBackoff<T>(
   fn: () => Promise<T>,
   maxRetries: number = 3,
@@ -107,9 +77,6 @@ export async function retryWithBackoff<T>(
   throw lastError!;
 }
 
-/**
- * Check if element is in viewport
- */
 export async function isElementInViewport(page: Page, selector: string): Promise<boolean> {
   return await page.evaluate((sel) => {
     const element = document.querySelector(sel);
@@ -125,9 +92,6 @@ export async function isElementInViewport(page: Page, selector: string): Promise
   }, selector);
 }
 
-/**
- * Scroll element into view if needed
- */
 export async function scrollElementIntoView(page: Page, selector: string): Promise<void> {
   await page.evaluate((sel) => {
     const element = document.querySelector(sel);
@@ -137,9 +101,6 @@ export async function scrollElementIntoView(page: Page, selector: string): Promi
   }, selector);
 }
 
-/**
- * Wait for element to be stable (not moving)
- */
 export async function waitForElementStable(page: Page, selector: string, timeout: number = 5000): Promise<void> {
   await page.waitForFunction(
     (sel) => {
@@ -154,9 +115,6 @@ export async function waitForElementStable(page: Page, selector: string, timeout
   );
 }
 
-/**
- * Generate test data for forms
- */
 export function generateTestFormData() {
   return {
     firstName: generateRandomString(8),

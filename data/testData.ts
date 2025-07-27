@@ -1,70 +1,47 @@
-export interface FormTestData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  gender: 'Male' | 'Female' | 'Other';
-  mobileNumber: string;
-  dateOfBirth: string;
-  subjects: string[];
-  hobbies: string[];
-  picturePath?: string;
-  currentAddress: string;
-  state: string;
-  city: string;
-}
-
-export const validFormData: FormTestData = {
+export const VALID_FORM_DATA = {
   firstName: 'John',
   lastName: 'Doe',
   email: 'john.doe@example.com',
   gender: 'Male',
   mobileNumber: '1234567890',
   dateOfBirth: '15 Jan 1990',
-  subjects: ['Maths', 'Physics'],
-  hobbies: ['Sports', 'Reading'],
-  currentAddress: '123 Main Street, New York, NY 10001',
+  subjects: ['Math', 'Physics'],
+  hobbies: ['Reading', 'Music'],
+  picturePath: './test-files/sample-image.jpg',
+  currentAddress: '123 Main Street, City, State 12345',
   state: 'NCR',
   city: 'Delhi'
 };
 
-export const validFormData2: FormTestData = {
+export const INVALID_FORM_DATA = {
+  firstName: '',
+  lastName: '',
+  email: 'invalid-email',
+  gender: 'Male',
+  mobileNumber: '123',
+  dateOfBirth: '15 Jan 1990',
+  subjects: [],
+  hobbies: [],
+  currentAddress: '',
+  state: 'NCR',
+  city: 'Delhi'
+};
+
+export const PARTIAL_FORM_DATA = {
   firstName: 'Jane',
   lastName: 'Smith',
   email: 'jane.smith@example.com',
   gender: 'Female',
   mobileNumber: '9876543210',
   dateOfBirth: '20 Mar 1985',
-  subjects: ['Chemistry', 'Biology'],
-  hobbies: ['Music'],
-  currentAddress: '456 Oak Avenue, Los Angeles, CA 90210',
+  subjects: ['Chemistry'],
+  hobbies: ['Sports'],
+  currentAddress: '456 Oak Avenue, Town, Province 67890',
   state: 'Uttar Pradesh',
   city: 'Agra'
 };
 
-export const invalidFormData = {
-  firstName: '',
-  lastName: '',
-  email: 'invalid-email',
-  gender: 'Male' as const,
-  mobileNumber: '123', // Too short
-  dateOfBirth: '15 Jan 1990',
-  subjects: [] as string[],
-  hobbies: [] as string[],
-  currentAddress: '',
-  state: 'NCR',
-  city: 'Delhi'
-};
-
-export const expectedCardTitles = [
-  'Elements',
-  'Forms',
-  'Alerts, Frame & Windows',
-  'Widgets',
-  'Interactions',
-  'Book Store Application'
-];
-
-export const testUrls = {
+export const TEST_URLS = {
   home: 'https://demoqa.com',
   elements: 'https://demoqa.com/elements',
   forms: 'https://demoqa.com/forms',
@@ -72,4 +49,21 @@ export const testUrls = {
   widgets: 'https://demoqa.com/widgets',
   interactions: 'https://demoqa.com/interaction',
   bookStore: 'https://demoqa.com/books'
+};
+
+export const EXPECTED_PAGE_TITLES = {
+  home: 'DEMOQA',
+  elements: 'Elements',
+  forms: 'Forms',
+  alertsFrameWindows: 'Alerts, Frame & Windows',
+  widgets: 'Widgets',
+  interactions: 'Interactions',
+  bookStore: 'Book Store'
+};
+
+export const VALIDATION_MESSAGES = {
+  requiredField: 'This field is required',
+  invalidEmail: 'Please enter a valid email address',
+  invalidMobile: 'Please enter a valid mobile number',
+  invalidDate: 'Please enter a valid date'
 }; 

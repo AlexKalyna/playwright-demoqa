@@ -1,17 +1,22 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { DragAndDropComponent } from '../components/DragAndDropComponent';
+import { MouseManipulationComponent } from '../components/MouseManipulationComponent';
+import { TabNavigationComponent } from '../components/TabNavigationComponent';
 import { DROPPABLE_SELECTORS, TAB_NAMES, EXPECTED_TEXTS } from '../data/droppableTestData';
 
 export class DroppablePage extends BasePage {
   private dragAndDrop: DragAndDropComponent;
+  private mouseManipulation: MouseManipulationComponent;
+  private tabNavigation: TabNavigationComponent;
 
   constructor(page: Page) {
     super(page);
     this.dragAndDrop = new DragAndDropComponent(page);
+    this.mouseManipulation = new MouseManipulationComponent(page);
+    this.tabNavigation = new TabNavigationComponent(page);
   }
 
-  // Locators
   get draggable(): Locator {
     return this.page.locator(DROPPABLE_SELECTORS.draggable);
   }
@@ -48,31 +53,28 @@ export class DroppablePage extends BasePage {
     return this.page.locator(DROPPABLE_SELECTORS.revertable);
   }
 
-  // Navigation methods
   async navigateToDroppable(): Promise<void> {
     await this.navigateTo('/droppable');
+    await this.waitForPageLoad();
   }
 
   async navigateToAcceptTab(): Promise<void> {
-    await this.page.click(`text=${TAB_NAMES.accept}`);
+    await this.tabNavigation.navigateToAcceptTab();
   }
 
   async navigateToPreventPropagationTab(): Promise<void> {
-    await this.page.click(`text=${TAB_NAMES.preventPropagation}`);
+    await this.tabNavigation.navigateToPreventPropagationTab();
   }
 
   async navigateToRevertDraggableTab(): Promise<void> {
-    await this.page.click(`text=${TAB_NAMES.revertDraggable}`);
+    await this.tabNavigation.navigateToRevertDraggableTab();
   }
 
   async reloadAndNavigateToAcceptTab(): Promise<void> {
-    await this.page.reload();
-    await this.page.click('text=Interactions');
-    await this.page.click('text=Droppable');
+    await this.reloadAndNavigate('/droppable');
     await this.navigateToAcceptTab();
   }
 
-  // Verification methods
   async verifyDroppableInitialState(): Promise<void> {
     await this.dragAndDrop.verifyInitialState(this.droppable);
   }
@@ -93,7 +95,6 @@ export class DroppablePage extends BasePage {
     await expect(this.droppable).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
   }
 
-  // Action methods
   async performDragAndDrop(): Promise<void> {
     await this.dragAndDrop.dragTo(this.draggable, this.droppable);
   }
@@ -121,7 +122,6 @@ export class DroppablePage extends BasePage {
     await this.dragAndDrop.dragTo(this.revertable, droppable);
   }
 
-  // Specific test methods
   async testBasicDragAndDrop(): Promise<void> {
     await this.verifyDroppableInitialState();
     await this.verifyDraggableVisible();
@@ -165,8 +165,19 @@ export class DroppablePage extends BasePage {
     await this.dragAndDrop.verifyDraggableVisible(this.revertable);
 
     const initialPosition = await this.revertable.boundingBox();
+    if (!initialPosition) {
+      throw new Error('Could not get initial position of revertable element');
+    }
+    
     await this.performRevertDraggableDragAndDrop();
-    await this.page.waitForTimeout(2000);
+    
+    await this.page.waitForFunction(() => {
+      const element = document.querySelector('#revertable');
+      if (!element) return false;
+      const rect = element.getBoundingClientRect();
+      return Math.abs(rect.x - initialPosition.x) < 1 && Math.abs(rect.y - initialPosition.y) < 1;
+    }, { timeout: 5000 });
+    
     const finalPosition = await this.revertable.boundingBox();
 
     return { initial: initialPosition, final: finalPosition };
@@ -183,5 +194,13 @@ export class DroppablePage extends BasePage {
     await this.setViewportSize(size);
     await this.performDragAndDrop();
     await this.verifyDropSuccess();
+  }
+
+  getMouseManipulation(): MouseManipulationComponent {
+    return this.mouseManipulation;
+  }
+
+  getTabNavigation(): TabNavigationComponent {
+    return this.tabNavigation;
   }
 } 
