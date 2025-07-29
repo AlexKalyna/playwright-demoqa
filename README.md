@@ -14,7 +14,8 @@ A focused test automation project for [demoqa.com](https://demoqa.com) built wit
 - **Self-Descriptive Code**: No comments - code speaks for itself
 - **Performance Testing**: Drag and drop, keyboard, and file upload performance assertions
 - **Cross-Viewport Testing**: Mobile, tablet, and desktop viewport validation
-- **Robust Test Framework**: 51 passing tests with clean architecture
+- **Robust Test Framework**: 70 passing tests with clean architecture
+- **Complex Locators**: Comprehensive CSS and XPath locator examples with axes, operators, and functions
 
 ## 📁 Project Structure
 
@@ -39,7 +40,8 @@ playwright-demoqa/
 │   ├── drag-and-drop.spec.ts    # Drag and drop functionality tests
 │   ├── mouse-manipulations.spec.ts # Mouse manipulation tests
 │   ├── keyboard-interactions.spec.ts # Keyboard interaction tests
-│   └── file-upload.spec.ts      # File upload/download tests
+│   ├── file-upload.spec.ts      # File upload/download tests
+│   └── complex-locators-working.spec.ts # Complex CSS and XPath locators
 ├── test-files/                   # Test files for upload testing
 ├── test-results/                 # Test results and reports (auto-generated)
 ├── playwright-report/            # HTML test reports (auto-generated)
@@ -165,6 +167,19 @@ npm run preview
 - **Error Handling**: File upload error scenarios
 - **Comprehensive Workflow**: End-to-end upload workflow testing
 
+### 5. Complex Locators Tests (`tests/complex-locators-working.spec.ts`)
+- **CSS Descendant Selectors**: Nested element selection with descendant axes
+- **CSS Child Selectors**: Direct child element selection
+- **CSS Attribute Selectors**: Contains, ends-with, and multiple attribute selectors
+- **CSS Pseudo-classes**: nth-child, first-child, not(:empty) selectors
+- **XPath Descendant Axis**: //element//child element selection
+- **XPath Ancestor Axis**: ancestor::element navigation
+- **XPath Position Functions**: position() and last() functions
+- **XPath Text Functions**: contains(), starts-with(), text() functions
+- **Coordinate-based Locators**: Bounding box and relative positioning
+- **Caption-based Locators**: Text content and attribute-based selection
+- **Complex Combined Locators**: Multiple conditions and axes combinations
+
 ## 🏗️ Architecture Patterns
 
 ### Component Pattern
@@ -283,29 +298,6 @@ Centralized constants for file upload functionality:
 - **Path Mapping**: Clean imports
 - **Module Resolution**: CommonJS
 
-## 🎯 Best Practices Demonstrated
-
-1. **Single Responsibility Principle**: Each class has one clear purpose
-2. **Component Pattern**: Reusable UI components for specific functionality
-3. **Page Object Model**: Separation of test logic from page interactions
-4. **Self-Descriptive Code**: No comments - method names and structure speak for themselves
-5. **Data-Driven Testing**: Centralized test data management
-6. **Performance Testing**: Drag and drop, keyboard, and file upload performance validation
-7. **Cross-Viewport Testing**: Responsive design validation
-8. **Clean Architecture**: Eliminated God Object pattern
-9. **YAGNI Principle**: Only essential code, no unnecessary features
-10. **Modern Playwright APIs**: Using fill() instead of deprecated type()
-
-## 🚀 Key Achievements
-
-- **51 Passing Tests**: All tests execute successfully
-- **Clean Architecture**: No God Objects, focused responsibilities
-- **Maintainable Code**: Easy to extend and modify
-- **Robust Testing**: Comprehensive drag and drop, mouse, keyboard, and file upload coverage
-- **Performance Focused**: Performance assertions for all operations
-- **Minimal Codebase**: Only essential files and functionality
-- **Modern APIs**: Using latest Playwright methods and best practices
-
 ## 📝 Scripts Available
 
 ```bash
@@ -353,6 +345,4 @@ npm run preview            # Preview latest report
 
 This project is licensed under the ISC License.
 
----
-
-**Note**: This project demonstrates professional test automation practices with a focus on drag and drop functionality, mouse manipulations, keyboard interactions, and file upload/download operations. The architecture follows clean code principles and YAGNI (You Aren't Gonna Need It) principle for maintainability and extensibility.
+-
